@@ -1,0 +1,71 @@
+.table-row,
+.table-column {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease;
+}
+
+.table-row:hover {
+  background-color: #e0e0e0;
+}
+
+.table-row.checked {
+  background-color: #b7b8bbff;
+}
+
+.table-row.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.file-checkbox,
+.file-name,
+.file-device,
+.file-path,
+.file-status {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+/* Flexible widths */
+.file-checkbox {
+  flex: 0.5;
+}
+.file-name {
+  flex: 1;
+}
+
+.file-device {
+  flex: 1;
+}
+
+.file-path {
+  flex: 3;
+}
+
+.file-status {
+  flex: 1;
+  text-align: right;
+}
+
+.no-data {
+  padding: 10px;
+  text-align: center;
+  color: #888;
+  font-style: italic;
+}
+
+.status-icon-available {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #4caf50; /* Green color for available status */
+  margin-right: 8px;
+  vertical-align: middle;
+}
