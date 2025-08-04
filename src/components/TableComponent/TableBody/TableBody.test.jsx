@@ -60,7 +60,7 @@ describe("TableBody", () => {
     render(<TableBody {...defaultProps} />);
 
     const statusIcon = screen.getByTitle("Available");
-    expect(statusIcon).toHaveClass("status-icon-available");
+    expect(statusIcon.className).toMatch(/statusIconAvailable/);
   });
 
   it("handles checked state correctly", () => {

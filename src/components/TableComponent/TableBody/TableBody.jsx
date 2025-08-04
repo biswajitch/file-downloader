@@ -1,68 +1,73 @@
-import "./index.css";
+import React from "react";
 import PropTypes from "prop-types";
+import styles from "./index.module.css";
 
 const tableRowClass = (file, index, checkedItems) =>
-  `table-row
-        ${checkedItems[file.name + index] ? "checked" : ""}
-        ${file.status !== "available" ? "disabled" : ""}`;
+  `${styles.tableRow}
+        ${checkedItems[file.name + index] ? styles.checked : ""}
+        ${file.status !== "available" ? styles.disabled : ""}`;
 
 const TableBody = ({ fileData, toggleOne, checkedItems }) => {
   return (
-    <ul className="table-body-list" role="table" aria-label="File list">
-      <li className="table-column" role="row">
+    <ul className={styles.tableBodyList} role="table" aria-label="File list">
+      <li className={styles.tableColumn} role="row">
         <span
-          className="file-checkbox"
+          className={styles.fileCheckbox}
           role="columnheader"
           aria-label="Select"
         ></span>
-        <span className="file-name" role="columnheader">
+        <span className={styles.fileName} role="columnheader">
           Name
         </span>
-        <span className="file-device" role="columnheader">
+        <span className={styles.fileDevice} role="columnheader">
           Device
         </span>
-        <span className="file-path" role="columnheader">
+        <span className={styles.filePath} role="columnheader">
           Path
         </span>
-        <span className="file-status" role="columnheader">
+        <span className={styles.fileStatus} role="columnheader">
           Status
         </span>
       </li>
-
       {fileData.length === 0 && (
-        <li className="no-data" role="row">
+        <li className={styles.noData} role="row">
           <span>No files available</span>
         </li>
       )}
-
+      {/*
+        If we have a large number of file rows, we can use a virtualized list here.
+        For now, we will render all rows.
+        This is a simple implementation — in a real-world scenario,
+        we might want to paginate or virtualize this list.
+      */}
       {fileData.map((file, index) => (
         <li
-          key={index}
+          key={file.name + index}
           className={tableRowClass(file, index, checkedItems)}
           role="row"
         >
           <input
             type="checkbox"
-            className="file-checkbox"
+            className={styles.fileCheckbox}
             disabled={file.status !== "available"}
             checked={checkedItems[file.name + index] ?? false}
             onChange={toggleOne(file.name + index)}
             aria-label={`Select file ${file.name}`}
             aria-checked={checkedItems[file.name + index] ?? false}
           />
-          <span className="file-name" role="cell">
+          <span className={styles.fileName} role="cell">
             {file.name}
           </span>
-          <span className="file-device" role="cell">
+          <span className={styles.fileDevice} role="cell">
             {file.device}
           </span>
-          <span className="file-path" role="cell">
+          <span className={styles.filePath} role="cell">
             {file.path}
           </span>
-          <span className="file-status" role="cell">
+          <span className={styles.fileStatus} role="cell">
             {file.status === "available" && (
               <span
-                className="status-icon-available"
+                className={styles.statusIconAvailable}
                 title="Available"
                 aria-label="Available"
               ></span>
@@ -88,4 +93,4 @@ TableBody.propTypes = {
   checkedItems: PropTypes.object.isRequired,
 };
 
-export default TableBody;
+export default React.memo(TableBody);

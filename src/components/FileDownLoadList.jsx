@@ -21,6 +21,7 @@ const FileDownloadList = ({ fileData, checkedItems }) => {
         {selectedFiles.map((file, index) => (
           <li key={index}>
             <span>{file.name}</span>
+            <span style={pathStyle}>{file.device}</span>
             <span aria-label={`Path: ${file.path}`} style={pathStyle}>
               {file.path}
             </span>

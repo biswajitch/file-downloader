@@ -1,17 +1,24 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
-import "./index.css";
+import styles from "./index.module.css";
 
 const TableHeader = ({ toggleAll, checkedItems, handleFileDownload }) => {
   const checkboxRef = useRef(null);
 
-  const values = Object.values(checkedItems);
-  const checkedCount = values.filter(Boolean).length;
-  const totalCount = values.length;
-
-  const allChecked = checkedCount === totalCount && totalCount > 0;
-  const someChecked = checkedCount > 0;
-  const isIndeterminate = someChecked && !allChecked;
+  const { allChecked, someChecked, isIndeterminate, checkedCount } =
+    useMemo(() => {
+      const values = Object.values(checkedItems);
+      const checkedCount = values.filter(Boolean).length;
+      const totalCount = values.length;
+      const allChecked = checkedCount === totalCount && totalCount > 0;
+      const someChecked = checkedCount > 0;
+      return {
+        checkedCount,
+        allChecked,
+        someChecked,
+        isIndeterminate: someChecked && !allChecked,
+      };
+    }, [checkedItems]);
 
   useEffect(() => {
     if (checkboxRef.current) {
@@ -20,8 +27,8 @@ const TableHeader = ({ toggleAll, checkedItems, handleFileDownload }) => {
   }, [isIndeterminate]);
 
   return (
-    <div className="table-header">
-      <div className="checkbox-container">
+    <div className={styles.tableHeader}>
+      <div className={styles.checkboxContainer}>
         <input
           type="checkbox"
           checked={allChecked}
@@ -36,7 +43,8 @@ const TableHeader = ({ toggleAll, checkedItems, handleFileDownload }) => {
       </div>
 
       <button
-        className="file-download-button"
+        className={styles.fileDownloadButton}
+        type="button"
         disabled={!someChecked}
         aria-disabled={!someChecked}
         onClick={handleFileDownload}
@@ -71,4 +79,4 @@ TableHeader.propTypes = {
   handleFileDownload: PropTypes.func.isRequired,
 };
 
-export default TableHeader;
+export default React.memo(TableHeader);

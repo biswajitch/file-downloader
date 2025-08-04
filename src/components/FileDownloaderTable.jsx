@@ -2,7 +2,7 @@ import TableHeader from "./TableComponent/TableHeader/TableHeader.jsx";
 import TableBody from "./TableComponent/TableBody/TableBody.jsx";
 import DialogModal from "./DialogComponent/DialogModal.jsx";
 import FileDownloadList from "./FileDownLoadList.jsx";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 const FileDownloaderTable = () => {
   const [fileData, setFileData] = useState([]);
@@ -22,7 +22,14 @@ const FileDownloaderTable = () => {
     };
     fetchData();
   }, []);
-
+  {
+    /* 
+    I have not mutated the fileData to have a unique id for each file. 
+    I have used the index and file name to create a unique key for each file. 
+    In future refactoring, I would prefer to use either a unique id generation utility 
+    or the file path as a unique identifier.
+  */
+  }
   useEffect(() => {
     if (fileData.length > 0) {
       const initialChecked = fileData.reduce((acc, file, index) => {
@@ -33,20 +40,29 @@ const FileDownloaderTable = () => {
     }
   }, [fileData]);
 
-  const toggleAll = (e) => {
+  const toggleAll = useCallback((e) => {
     const checked = e.target.checked;
-    const newState = Object.fromEntries(
-      Object.keys(checkedItems).map((key) => [key, checked])
+    setCheckedItems((prev) =>
+      Object.fromEntries(Object.keys(prev).map((key) => [key, checked]))
     );
-    setCheckedItems(newState);
-  };
+  }, []);
 
-  const toggleOne = (key) => (e) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [key]: e.target.checked,
-    }));
-  };
+  {
+    /* 
+    the toogleOne function needs to be upated if the dataset is large, either using
+    a virtualized list or a shared handler. To minimize the number of closures created
+    */
+  }
+  const toggleOne = useCallback(
+    (key) => (e) => {
+      const value = e.target.checked;
+      setCheckedItems((prev) => ({
+        ...prev,
+        [key]: value,
+      }));
+    },
+    []
+  );
 
   const handleFileDownload = () => {
     setDialogOpen(true);

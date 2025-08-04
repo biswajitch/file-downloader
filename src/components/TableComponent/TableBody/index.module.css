@@ -1,5 +1,5 @@
-.table-row,
-.table-column {
+.tableRow,
+.tableColumn {
   display: flex;
   align-items: center;
   padding: 10px;
@@ -8,24 +8,24 @@
   transition: background-color 0.3s ease;
 }
 
-.table-row:hover {
+.tableRow:hover {
   background-color: #e0e0e0;
 }
 
-.table-row.checked {
+.tableRow.checked {
   background-color: #b7b8bbff;
 }
 
-.table-row.disabled {
+.tableRow.disabled {
   opacity: 0.5;
   pointer-events: none;
 }
 
-.file-checkbox,
-.file-name,
-.file-device,
-.file-path,
-.file-status {
+.fileCheckbox,
+.fileName,
+.fileDevice,
+.filePath,
+.fileStatus {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -33,34 +33,34 @@
 }
 
 /* Flexible widths */
-.file-checkbox {
+.fileCheckbox {
   flex: 0.5;
 }
-.file-name {
+.fileName {
   flex: 1;
 }
 
-.file-device {
+.fileDevice {
   flex: 1;
 }
 
-.file-path {
+.filePath {
   flex: 3;
 }
 
-.file-status {
+.fileStatus {
   flex: 1;
   text-align: right;
 }
 
-.no-data {
+.noData {
   padding: 10px;
   text-align: center;
   color: #888;
   font-style: italic;
 }
 
-.status-icon-available {
+.statusIconAvailable {
   display: inline-block;
   width: 8px;
   height: 8px;
